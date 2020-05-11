@@ -12,14 +12,16 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.weightInput.delegate = self as? UITextFieldDelegate
+        self.heightInput.delegate = self as? UITextFieldDelegate
+
     }
 
     @IBOutlet weak var weightInput: UITextField!
     @IBOutlet weak var heightInput: UITextField!
     @IBOutlet weak var BMIOutput: UITextField!
     @IBOutlet weak var categoryOutput: UILabel!
-    @IBAction func calcBMI(_ sender: Any) {
+    @IBAction func calcBMI(_ sender: UIButton) {
         
         if let heightStr = heightInput.text{
             if heightStr == " "
@@ -35,7 +37,7 @@ class ViewController: UIViewController {
                         if let heightNum = Double(heightStr){
                             if let weightNum = Double(weightStr){
                                 let BMI: Double = (weightNum) / (heightNum * heightNum)
-                                BMIOutput.text = String(BMI)
+                                BMIOutput.text = String(Int(BMI))
 
                                 switch BMI {
                                 case 1..<15:
@@ -65,6 +67,11 @@ class ViewController: UIViewController {
             }
         }
         
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            self.weightInput.resignFirstResponder()
+            self.heightInput.resignFirstResponder()
+        return true
+        }
     }
 }
 
